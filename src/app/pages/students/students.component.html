@@ -1,0 +1,101 @@
+<div class="panel">
+  <div class="between">
+    <div class="title ml mt">Students list</div>
+    <p-button class="mr mt" routerLink="../create-student"
+      >Add new student</p-button
+    >
+  </div>
+  <ng-container *ngIf="state$ | async as state">
+    <div class="sub-header">
+      <!-- <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-plus"
+        label="Create staff"
+        class="p-button-secondary mr-2"
+      ></button> -->
+    </div>
+    <div class="content p-2">
+      <table class="items">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Lastname</th>
+            <th>From</th>
+            <th>Semester</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Gender</th>
+            <th>Faculty</th>
+            <th>Assesment</th>
+            <th>Started</th>
+            <th>Ended</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody *ngIf="!state.loading && !state.error">
+          <tr *ngFor="let item of state.items">
+            <td>{{ item.name }}</td>
+            <td>{{ item.lastname }}</td>
+            <td>{{ item.from }}</td>
+            <td>{{ item.semester }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.phone }}</td>
+            <td>{{ item.gender }}</td>
+            <td>{{ item.faculty }}</td>
+            <td>{{ item.assessment }}</td>
+            <td>{{ item.educationStartYear }}</td>
+            <td>{{ item.educationEndYear }}</td>
+            <td>
+              <p-button
+                class="p-button-primary ml"
+                (click)="onOpenJournal(item.id)"
+              >
+                Journal
+              </p-button>
+            </td>
+          </tr>
+        </tbody>
+
+        <tbody *ngIf="state?.loading">
+          <tr *ngFor="let i of [].constructor(7)">
+            <td *ngFor="let i of [].constructor(11)">
+              <p-skeleton></p-skeleton>
+            </td>
+          </tr>
+        </tbody>
+
+        <tbody
+          *ngIf="!state?.loading && !state?.items?.length && !state?.error"
+        >
+          <tr>
+            <td colspan="11">
+              <div class="text-center p-6 fw-500">List is empty</div>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="!state?.loading && state?.error">
+          <tr>
+            <td colspan="12">
+              <div class="text-center p-6 fw-500">
+                {{ state.error }}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p-paginator
+        [rows]="rows"
+        [first]="((state?.page ?? 0) - 1) * rows"
+        [totalRecords]="state?.total ?? 0"
+        [rowsPerPageOptions]="[10]"
+        [showCurrentPageReport]="true"
+        (onPageChange)="paginate($event)"
+      ></p-paginator>
+      <!-- <app-paginator [state]="state" [action]="action"></app-paginator> -->
+    </div>
+  </ng-container>
+</div>

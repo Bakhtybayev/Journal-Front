@@ -1,0 +1,16 @@
+:host {
+  ::ng-deep {
+    .p-paginator .p-dropdown {
+      display: none !important;
+    }
+  }
+
+  .title {
+    font-size: 24px;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  }
+
+  .col {
+    width: 300px;
+  }
+}

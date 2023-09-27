@@ -1,0 +1,104 @@
+<div>
+  <!-- <div class="title">Journal</div> -->
+  <div *ngIf="!loading">
+    <form
+      autocomplete="off"
+      class="mt-2"
+      *ngIf="form"
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      (keyup.enter)="submit()"
+    >
+      <div class="col">
+        <span class="p-float-label">
+          <label>Name</label>
+          <input pInputText formControlName="name" />
+        </span>
+      </div>
+      <div class="col mt">
+        <span class="p-float-label">
+          <label>Last name</label>
+          <input pInputText formControlName="lastname" />
+        </span>
+      </div>
+      <div class="col mt">
+        <span class="p-float-label">
+          <label>Email</label>
+          <input pInputText formControlName="email" />
+        </span>
+      </div>
+      <div class="col mt">
+        <span class="p-float-label">
+          <label>Phone</label>
+          <input pInputText formControlName="phone" />
+        </span>
+      </div>
+      <div class="col mt">
+        <span class="p-float-label">
+          <label>Semester</label>
+          <input pInputText formControlName="semester" />
+        </span>
+      </div>
+      <div class="col mt">
+        <span class="p-float-label">
+          <label>From</label>
+          <input pInputText formControlName="from" />
+        </span>
+      </div>
+      <div class="col mt">
+        <span class="p-float-label">
+          <label>Gender</label>
+          <input pInputText formControlName="gender" />
+        </span>
+      </div>
+      <div class="col mt">
+        <span class="p-float-label">
+          <label>Faculty</label>
+          <input pInputText formControlName="faculty" />
+        </span>
+      </div>
+      <div class="col mt">
+        <span class="p-float-label">
+          <label>Assessment</label>
+          <input pInputText formControlName="assessment" />
+        </span>
+      </div>
+      <div class="col mt">
+        <span class="p-float-label">
+          <label>Education start year</label>
+          <input pInputText formControlName="educationStartYear" />
+        </span>
+      </div>
+      <div class="col mt">
+        <span class="p-float-label">
+          <label>Education end year</label>
+          <input pInputText formControlName="educationEndYear" />
+        </span>
+      </div>
+    </form>
+    <div class="end mt">
+      <button
+        pButton
+        pRipple
+        label="Update"
+        class="p-button-raised p-button-primary mr-2 end cursor-pointer"
+        [loading]="submitted"
+        [disabled]="form?.invalid || submitted || !form?.dirty"
+        (click)="submit()"
+      ></button>
+    </div>
+  </div>
+
+  <div *ngIf="loading">
+    <div class="col" *ngFor="let i of [].constructor(11)">
+      <span class="p-float-label">
+        <div style="width: 100px">
+          <p-skeleton></p-skeleton>
+        </div>
+        <div class="mt mb">
+          <p-skeleton></p-skeleton>
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
