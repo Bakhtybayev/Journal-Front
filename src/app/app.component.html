@@ -1,1 +1,6 @@
+<!-- *ngIf="loadingHelper.isLoading$ | async" -->
+<p-progressBar mode="indeterminate" class="request-progress"></p-progressBar>
+<p-toast appendTo="body"></p-toast>
+<p-confirmPopup key="popup" appendTo="body"></p-confirmPopup>
+<p-confirmDialog key="dialog" class="confirm-dialog-width"></p-confirmDialog>
 <router-outlet></router-outlet>

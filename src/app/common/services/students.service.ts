@@ -8,8 +8,13 @@ import { StudentDataModel } from '../modules/StudentData.model';
   providedIn: 'root',
 })
 export class StudentsService {
-  private static rotUrl = 'http://localhost:9191/';
-  static readonly studentsRootUrl = 'students';
+  private static rootUrl = 'http://localhost:9191/';
+  static readonly getStudentRootUrl = 'get-student/';
+  static readonly getStudentsRootUrl = 'get-students';
+  static readonly createStudentRootUrl = 'create-student';
+  static readonly updateStudentRootUrl = 'update-student/';
+  static readonly deleteStudentRootUrl = 'delete-student/';
+  static readonly createStudentsRootUrl = 'create-students';
 
   constructor(private http: HttpClient) {}
 
@@ -18,11 +23,14 @@ export class StudentsService {
     count?: number;
   }): Observable<StudentDataModel> {
     return this.http
-      .get<StudentDataModel>('http://localhost:9191/students', {
-        headers: {
-          Accept: 'application/json',
-        },
-      })
+      .get<StudentDataModel>(
+        StudentsService.rootUrl + StudentsService.getStudentsRootUrl,
+        {
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      )
       .pipe(
         // filter((response: any) => response instanceof HttpResponse),
         map((response: StudentDataModel) => {
@@ -31,9 +39,11 @@ export class StudentsService {
       );
   }
 
-  getStudentById(id: number): Observable<StudentModel> {
+  getStudent(id: number): Observable<StudentModel> {
     return this.http
-      .get<StudentModel>(`http://localhost:9191/studentById/${id}`)
+      .get<StudentModel>(
+        StudentsService.rootUrl + StudentsService.getStudentRootUrl + id
+      )
       .pipe(
         map((response: StudentModel) => {
           return response;
@@ -45,12 +55,60 @@ export class StudentsService {
     const headers = new HttpHeaders();
 
     return this.http
-      .put<StudentModel>(`http://localhost:9191/update-student`, student, {
-        headers,
-      })
+      .put<StudentModel>(
+        StudentsService.rootUrl + StudentsService.updateStudentRootUrl,
+        student,
+        {
+          headers,
+        }
+      )
       .pipe(
-        map((response: StudentModel) => {
-          return response;
+        map(() => {
+          return {
+            status: 'Student successfully updated',
+            updatedStudentId: student.id,
+            updatedDate: new Date(),
+          } as any;
+        })
+      );
+  }
+
+  createStudent(student: StudentModel): Observable<StudentModel> {
+    const headers = new HttpHeaders();
+
+    return this.http
+      .post<StudentModel>(
+        StudentsService.rootUrl + StudentsService.createStudentRootUrl,
+        student,
+        {
+          headers,
+        }
+      )
+      .pipe(
+        map(() => {
+          return {
+            status: 'Student successfully created',
+            createdStudentId: student.id,
+            createdDate: new Date(),
+          } as any;
+        })
+      );
+  }
+
+  deleteStudent(id: number): Observable<StudentModel> {
+    // const headers = new HttpHeaders();
+
+    return this.http
+      .delete<StudentModel>(
+        StudentsService.rootUrl + StudentsService.deleteStudentRootUrl + id
+      )
+      .pipe(
+        map(() => {
+          return {
+            status: 'Student successfully deleted',
+            deletedStudentId: id,
+            deletedDate: new Date(),
+          } as any;
         })
       );
   }

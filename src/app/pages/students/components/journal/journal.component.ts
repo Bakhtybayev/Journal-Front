@@ -5,6 +5,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { StudentsService } from 'src/app/common/services/students.service';
 import { MessageService } from 'primeng/api';
 import { StudentModel } from 'src/app/common/modules/Student.model';
+import { Store } from '@ngxs/store';
+import { StudentsAction } from '../../state/students.actions';
 
 @Component({
   selector: 'app-journal',
@@ -14,6 +16,7 @@ import { StudentModel } from 'src/app/common/modules/Student.model';
 export class JournalComponent {
   student?: StudentModel;
   form?: FormGroup;
+  studentId?: number;
   types = [{ label: 'Me', value: 'You' }];
   submitted = false;
   loading = false;
@@ -22,30 +25,33 @@ export class JournalComponent {
     public dialogRef: DynamicDialogRef,
     private dialogConfig: DynamicDialogConfig,
     private api: StudentsService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private store: Store
   ) {}
 
   async ngOnInit() {
     this.loading = true;
-    const id = this.dialogConfig.data?.id;
-    await firstValueFrom(this.api.getStudentById(id))
-      .then((response) => {
-        this.student = response;
-        this.loading = false;
-      })
-      .catch((error) => {
-        this.submitted = false;
-        this.loading = false;
-        this.messageService.add({
-          severity: 'danger',
-          summary: 'Error',
-          detail: 'Failed to get student details',
+    this.studentId = this.dialogConfig.data?.id;
+    if (this.studentId) {
+      await firstValueFrom(this.api.getStudent(this.studentId))
+        .then((response) => {
+          this.student = response;
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.submitted = false;
+          this.loading = false;
+          this.messageService.add({
+            severity: 'danger',
+            summary: 'Error',
+            detail: 'Failed to get student details',
+          });
+          throw error;
         });
-        throw error;
-      });
+    }
 
     this.form = this.fb.group({
-      id: this.fb.control(id),
+      id: this.fb.control(this.studentId),
       name: this.fb.control(this.student?.name ?? null, [Validators.required]),
       lastname: this.fb.control(this.student?.lastname ?? null, [
         Validators.required,
@@ -82,28 +88,31 @@ export class JournalComponent {
   }
 
   submit() {
-    // const request = id ? this.api.Update({ body }) : this.api.Create({ body });
     this.submitted = true;
     const body = { ...this.form?.value };
-    firstValueFrom(this.api.updateStudent(body))
-      .then((res) => {
-        if (res) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Student updated',
-            // detail: id ? 'News updated' : 'News created',
-          });
-          this.submitted = false;
-        }
+    if (this.studentId) this.form?.removeControl('id');
+
+    const requestBody = this.studentId
+      ? this.api.updateStudent(body)
+      : this.api.createStudent(body);
+
+    firstValueFrom(requestBody)
+      .then(() => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: this.studentId ? 'Journal updated' : 'Journal created',
+        });
+        this.submitted = false;
+        this.dialogRef.close();
+        this.store.dispatch(new StudentsAction(''));
       })
       .catch((error) => {
         this.submitted = false;
         this.messageService.add({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Error',
           detail: 'Error occured',
-          // detail: id ? 'News updated' : 'News created',
         });
         throw error;
       });

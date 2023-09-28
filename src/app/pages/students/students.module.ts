@@ -8,9 +8,12 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { JournalComponent } from './components/journal/journal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
-  declarations: [StudentsComponent],
+  declarations: [StudentsComponent, JournalComponent],
   imports: [
     PaginatorModule,
     CommonModule,
@@ -20,7 +23,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     // ButtonModule,
     NgxsModule.forFeature([StudentsState]),
     ButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
+  providers: [ConfirmationService],
   // schemas: [NO_ERRORS_SCHEMA],
 })
 export class StudentsModule {}

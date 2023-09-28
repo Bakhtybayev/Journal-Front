@@ -1,27 +1,38 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { StudentsState, StudentsStateModel } from './state/students.state';
 import { Select, Store } from '@ngxs/store';
 import { StudentsAction } from './state/students.actions';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LazyLoadEvent } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
-import { JournalComponent } from '../journal/journal.component';
+import {
+  ConfirmationService,
+  LazyLoadEvent,
+  MessageService,
+} from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { JournalComponent } from './components/journal/journal.component';
+import { StudentsService } from 'src/app/common/services/students.service';
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss'],
+  providers: [DynamicDialogRef],
 })
 export class StudentsComponent {
   @Select(StudentsState.state) state$?: Observable<StudentsStateModel>;
   rows = 10;
   queryParams: any;
+  submitted = false;
 
   constructor(
     private store: Store,
     private router: Router,
+    private api: StudentsService,
     private route: ActivatedRoute,
-    private dialogService: DialogService
+    private dialogRef: DynamicDialogRef,
+    private dialogService: DialogService,
+    private messageService: MessageService,
+    private confirmService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -47,15 +58,50 @@ export class StudentsComponent {
     // this.getData();
   }
 
-  onOpenJournal(studentId: number) {
+  onOpenJournal(studentId?: number) {
     this.dialogService.open(JournalComponent, {
       data: {
         id: studentId,
       },
-      header: 'Update student journal',
+      header: studentId ? 'Update student journal' : 'Create student',
       width: '50%',
       height: '100%',
       dismissableMask: true,
     });
+  }
+
+  onDeleteStudentConfirmation(studentId: number) {
+    this.confirmService.confirm({
+      key: 'dialog',
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => this.onDeleteStudent(studentId),
+      reject: () => ({}),
+    });
+  }
+
+  onDeleteStudent(studentId: number) {
+    firstValueFrom(this.api.deleteStudent(studentId))
+      .then((res) => {
+        if (res) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Student deleted',
+          });
+          this.submitted = false;
+          this.store.dispatch(new StudentsAction(''));
+        }
+      })
+      .catch((error) => {
+        this.submitted = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error occured',
+        });
+        throw error;
+      });
   }
 }

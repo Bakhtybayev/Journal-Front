@@ -80,7 +80,7 @@
       <button
         pButton
         pRipple
-        label="Update"
+        [label]="studentId ? 'Update' : 'Create'"
         class="p-button-raised p-button-primary mr-2 end cursor-pointer"
         [loading]="submitted"
         [disabled]="form?.invalid || submitted || !form?.dirty"

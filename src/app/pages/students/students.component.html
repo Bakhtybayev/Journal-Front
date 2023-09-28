@@ -1,9 +1,7 @@
 <div class="panel">
   <div class="between">
     <div class="title ml mt">Students list</div>
-    <p-button class="mr mt" routerLink="../create-student"
-      >Add new student</p-button
-    >
+    <p-button class="mr mt" (click)="onOpenJournal()">Add new student</p-button>
   </div>
   <ng-container *ngIf="state$ | async as state">
     <div class="sub-header">
@@ -32,6 +30,7 @@
             <th>Started</th>
             <th>Ended</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
 
@@ -50,10 +49,19 @@
             <td>{{ item.educationEndYear }}</td>
             <td>
               <p-button
-                class="p-button-primary ml"
+                class="p-button-raised ml cursor-pointer"
                 (click)="onOpenJournal(item.id)"
               >
                 Journal
+              </p-button>
+            </td>
+            <td>
+              <p-button
+                [style]="{ 'background-color': 'red' }"
+                class="p-button-raised ml cursor-pointer"
+                (click)="onDeleteStudentConfirmation(item.id)"
+              >
+                Delete
               </p-button>
             </td>
           </tr>
