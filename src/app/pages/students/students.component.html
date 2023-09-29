@@ -69,7 +69,7 @@
 
         <tbody *ngIf="state?.loading">
           <tr *ngFor="let i of [].constructor(7)">
-            <td *ngFor="let i of [].constructor(11)">
+            <td *ngFor="let i of [].constructor(13)">
               <p-skeleton></p-skeleton>
             </td>
           </tr>
@@ -79,14 +79,14 @@
           *ngIf="!state?.loading && !state?.items?.length && !state?.error"
         >
           <tr>
-            <td colspan="11">
+            <td colspan="13">
               <div class="text-center p-6 fw-500">List is empty</div>
             </td>
           </tr>
         </tbody>
         <tbody *ngIf="!state?.loading && state?.error">
           <tr>
-            <td colspan="12">
+            <td colspan="13">
               <div class="text-center p-6 fw-500">
                 {{ state.error }}
               </div>

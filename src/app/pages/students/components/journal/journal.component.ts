@@ -7,6 +7,12 @@ import { MessageService } from 'primeng/api';
 import { StudentModel } from 'src/app/common/modules/Student.model';
 import { Store } from '@ngxs/store';
 import { StudentsAction } from '../../state/students.actions';
+import {
+  AssessmentTypes,
+  FacultyTypes,
+  GenderTypes,
+  SemesterTypes,
+} from 'src/app/common/modules/StudentStateTypes.model';
 
 @Component({
   selector: 'app-journal',
@@ -17,7 +23,26 @@ export class JournalComponent {
   student?: StudentModel;
   form?: FormGroup;
   studentId?: number;
-  types = [{ label: 'Me', value: 'You' }];
+
+  semesters = Object.entries(SemesterTypes).map(([value, text]) => ({
+    label: value,
+    value: text,
+  }));
+  genders = Object.entries(GenderTypes).map(([value, text]) => ({
+    label: value,
+    value: text,
+  }));
+  facultys = Object.entries(FacultyTypes).map(([value, text]) => ({
+    label: text,
+    value: text,
+  }));
+  assessments = [
+    { label: '1', value: 1 },
+    { label: '2', value: 2 },
+    { label: '3', value: 3 },
+    { label: '4', value: 4 },
+  ];
+
   submitted = false;
   loading = false;
   constructor(
@@ -59,6 +84,7 @@ export class JournalComponent {
       from: this.fb.control(this.student?.from ?? null, [Validators.required]),
       email: this.fb.control(this.student?.email ?? null, [
         Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
       phone: this.fb.control(this.student?.phone ?? null, [
         Validators.required,
@@ -69,9 +95,10 @@ export class JournalComponent {
       faculty: this.fb.control(this.student?.faculty ?? null, [
         Validators.required,
       ]),
-      assessment: this.fb.control(this.student?.assessment ?? null, [
-        Validators.required,
-      ]),
+      assessment: this.fb.control(
+        this.student?.assessment ?? null,
+        this.student?.assessment ? [Validators.required] : null
+      ),
       semester: this.fb.control(this.student?.semester ?? null, [
         Validators.required,
       ]),
@@ -90,7 +117,7 @@ export class JournalComponent {
   submit() {
     this.submitted = true;
     const body = { ...this.form?.value };
-    if (this.studentId) this.form?.removeControl('id');
+    if (!this.studentId) this.form?.removeControl('id');
 
     const requestBody = this.studentId
       ? this.api.updateStudent(body)

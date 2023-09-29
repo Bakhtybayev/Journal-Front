@@ -24,19 +24,23 @@
       <div class="col mt">
         <span class="p-float-label">
           <label>Email</label>
-          <input pInputText formControlName="email" />
+          <input pInputText type="email" formControlName="email" />
+          <p
+            *ngIf="form?.get('email')?.invalid && form?.get('email')?.touched"
+            style="color: red"
+          >
+            Email is not valid
+          </p>
         </span>
       </div>
       <div class="col mt">
         <span class="p-float-label">
           <label>Phone</label>
-          <input pInputText formControlName="phone" />
-        </span>
-      </div>
-      <div class="col mt">
-        <span class="p-float-label">
-          <label>Semester</label>
-          <input pInputText formControlName="semester" />
+          <p-inputMask
+            mask="(999) 999-9999"
+            placeholder="(999) 999-9999"
+            formControlName="phone"
+          ></p-inputMask>
         </span>
       </div>
       <div class="col mt">
@@ -47,32 +51,88 @@
       </div>
       <div class="col mt">
         <span class="p-float-label">
+          <label>Semester</label>
+          <p-dropdown
+            placeholder="Select semester"
+            appendTo="body"
+            [options]="semesters"
+            formControlName="semester"
+            optionLabel="label"
+            optionValue="value"
+            [autoDisplayFirst]="false"
+          ></p-dropdown>
+        </span>
+      </div>
+      <div class="col mt">
+        <span class="p-float-label">
           <label>Gender</label>
-          <input pInputText formControlName="gender" />
+          <p-dropdown
+            placeholder="Select gender"
+            appendTo="body"
+            [options]="genders"
+            formControlName="gender"
+            optionLabel="label"
+            optionValue="value"
+            [autoDisplayFirst]="false"
+          ></p-dropdown>
         </span>
       </div>
       <div class="col mt">
         <span class="p-float-label">
           <label>Faculty</label>
-          <input pInputText formControlName="faculty" />
+          <p-dropdown
+            placeholder="Select faculty"
+            appendTo="body"
+            [options]="facultys"
+            formControlName="faculty"
+            optionLabel="label"
+            optionValue="value"
+            [autoDisplayFirst]="false"
+          ></p-dropdown>
         </span>
       </div>
       <div class="col mt">
         <span class="p-float-label">
           <label>Assessment</label>
-          <input pInputText formControlName="assessment" />
+          <p-dropdown
+            placeholder="Select assessment"
+            appendTo="body"
+            [options]="assessments"
+            formControlName="assessment"
+            optionLabel="label"
+            optionValue="value"
+            [autoDisplayFirst]="false"
+          ></p-dropdown>
         </span>
       </div>
       <div class="col mt">
         <span class="p-float-label">
           <label>Education start year</label>
-          <input pInputText formControlName="educationStartYear" />
+          <p-calendar
+            placeholder="Select start year"
+            appendTo="body"
+            yearRange="2000:2030"
+            formControlName="educationStartYear"
+            [showButtonBar]="true"
+            [monthNavigator]="true"
+            [yearNavigator]="true"
+            dateFormat="dd.mm.yy"
+          ></p-calendar>
         </span>
       </div>
       <div class="col mt">
         <span class="p-float-label">
           <label>Education end year</label>
-          <input pInputText formControlName="educationEndYear" />
+          <p-calendar
+            placeholder="Select end year"
+            appendTo="body"
+            yearRange="2000:2030"
+            formControlName="educationEndYear"
+            [showButtonBar]="true"
+            [monthNavigator]="true"
+            [yearNavigator]="true"
+            dateFormat="dd.mm.yy"
+          ></p-calendar>
         </span>
       </div>
     </form>

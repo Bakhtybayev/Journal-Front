@@ -4,4 +4,10 @@
     padding: 2.5rem !important;
   }
   //   }
+
+  ::ng-deep {
+    .p-hidden-accessible {
+      display: none !important;
+    }
+  }
 }
