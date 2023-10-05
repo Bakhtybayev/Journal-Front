@@ -1,0 +1,50 @@
+:host {
+  .params {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .p-col-1 {
+    width: 200px;
+    margin: 10px;
+  }
+
+  .filter {
+    display: flex;
+    align-items: center;
+  }
+
+  .buttons {
+    display: flex;
+    margin-right: 10px;
+  }
+
+  .mr-10 {
+    margin-right: 10px;
+  }
+
+  input {
+    padding-left: 10px;
+  }
+
+  ::ng-deep {
+    .p-hidden-accessible {
+      display: none !important;
+    }
+    .p-dropdown {
+      padding-left: 10px;
+    }
+    // .p-calendar {
+    //   padding-left: 10px;
+    // }
+    p-calendar {
+      padding-left: 10px;
+    }
+
+    .p-button .p-button-icon-left,
+    .p-button .p-button-icon {
+      margin-right: 0.1rem !important;
+    }
+  }
+}

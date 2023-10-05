@@ -11,9 +11,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { JournalComponent } from './components/journal/journal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
+import { FiltersComponent } from './components/filters/filters.component';
 
 @NgModule({
-  declarations: [StudentsComponent, JournalComponent],
+  declarations: [StudentsComponent, JournalComponent, FiltersComponent],
   imports: [
     PaginatorModule,
     CommonModule,

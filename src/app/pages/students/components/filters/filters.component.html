@@ -1,0 +1,189 @@
+<form *ngIf="form" [formGroup]="form">
+  <!-- (ngSubmit)="search()"
+  (keyup.enter)="search()" -->
+  <div class="filter">
+    <div class="params" [ngClass]="filterForm">
+      <div class="p-col-1">
+        <span class="p-float-label">
+          <input
+            pInputText
+            formControlName="name"
+            class="w-full"
+            placeholder="Name"
+          />
+          <!-- <label>Nam</label> -->
+        </span>
+      </div>
+
+      <div class="p-col-1">
+        <span class="p-float-label">
+          <input
+            pInputText
+            formControlName="lastname"
+            class="w-full"
+            placeholder="Lastname"
+          />
+          <!-- <label>Nam</label> -->
+        </span>
+      </div>
+
+      <div class="p-col-1">
+        <span class="p-float-label">
+          <input
+            pInputText
+            formControlName="from"
+            class="w-full"
+            placeholder="From"
+          />
+          <!-- <label>Nam</label> -->
+        </span>
+      </div>
+
+      <div class="p-col-1">
+        <span class="p-float-label">
+          <p-dropdown
+            class="w-full"
+            placeholder="Select semester"
+            optionValue="value"
+            optionLabel="label"
+            formControlName="semester"
+            [autoDisplayFirst]="false"
+            [options]="semesters"
+            [showClear]="true"
+          ></p-dropdown>
+        </span>
+      </div>
+
+      <div class="p-col-1">
+        <span class="p-float-label">
+          <input
+            placeholder="Email"
+            pInputText
+            formControlName="email"
+            class="w-full"
+          />
+        </span>
+      </div>
+
+      <div class="p-col-1">
+        <span class="p-float-label">
+          <input
+            placeholder="Phone"
+            pInputText
+            formControlName="phone"
+            class="w-full"
+          />
+        </span>
+      </div>
+
+      <div class="p-col-1">
+        <span class="p-float-label">
+          <p-dropdown
+            class="w-full"
+            placeholder="Select gender"
+            optionValue="value"
+            optionLabel="label"
+            formControlName="gender"
+            [autoDisplayFirst]="false"
+            [options]="genders"
+            [showClear]="true"
+          ></p-dropdown>
+        </span>
+      </div>
+
+      <div class="p-col-1">
+        <span class="p-float-label">
+          <p-dropdown
+            class="w-full"
+            placeholder="Select faculty"
+            optionValue="value"
+            optionLabel="label"
+            formControlName="faculty"
+            [autoDisplayFirst]="false"
+            [options]="facultys"
+            [showClear]="true"
+          ></p-dropdown>
+        </span>
+      </div>
+
+      <div class="p-col-1">
+        <span class="p-float-label">
+          <p-dropdown
+            class="w-full"
+            placeholder="Select assessment"
+            optionValue="value"
+            optionLabel="label"
+            formControlName="assessment"
+            [autoDisplayFirst]="false"
+            [options]="assessments"
+            [showClear]="true"
+          ></p-dropdown>
+        </span>
+      </div>
+
+      <div class="p-col-1">
+        <span class="p-float-label" style="margin-left: -10px">
+          <p-calendar
+            appendTo="body"
+            placeholder="Select start date"
+            yearRange="2000:2030"
+            formControlName="educationStartYear"
+            [showButtonBar]="true"
+            [monthNavigator]="true"
+            [yearNavigator]="true"
+            [showTime]="true"
+            [showSeconds]="true"
+            dateFormat="dd.mm.yy"
+          ></p-calendar>
+        </span>
+      </div>
+
+      <div class="p-col-1">
+        <span class="p-float-label" style="margin-left: -10px">
+          <p-calendar
+            placeholder="Select end date"
+            appendTo="body"
+            yearRange="2000:2030"
+            formControlName="educationEndYear"
+            [showButtonBar]="true"
+            [monthNavigator]="true"
+            [yearNavigator]="true"
+            [showTime]="true"
+            [showSeconds]="true"
+            dateFormat="dd.mm.yy"
+          ></p-calendar>
+        </span>
+      </div>
+    </div>
+    <div class="buttons">
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-times"
+        [disabled]="form.pristine || form.invalid"
+        class="mr-10 p-button-rounded cursor-pointer"
+        (click)="onReset()"
+      ></button>
+
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-search"
+        class="p-button-success p-button-rounded cursor-pointer"
+        (click)="onSearch()"
+      ></button>
+
+      <!-- <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-angle-down"
+        class="ml-2 p-button-rounded p-button-outlined filter-toggle"
+        [ngClass]="filterForm"
+        (click)="toogleFilterForm()"
+      ></button> -->
+    </div>
+  </div>
+</form>

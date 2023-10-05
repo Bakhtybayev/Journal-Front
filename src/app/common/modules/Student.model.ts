@@ -8,7 +8,7 @@ export interface StudentModel {
   phone: string;
   gender: string;
   faculty: string;
-  assessment: number;
-  educationStartYear: number;
-  educationEndYear: number;
+  assessment: string;
+  educationStartYear: string;
+  educationEndYear: string;
 }

@@ -3,6 +3,9 @@
     <div class="title ml mt">Students list</div>
     <p-button class="mr mt" (click)="onOpenJournal()">Add new student</p-button>
   </div>
+  <div class="filters">
+    <app-filters></app-filters>
+  </div>
   <ng-container *ngIf="state$ | async as state">
     <div class="sub-header">
       <!-- <button
@@ -45,8 +48,8 @@
             <td>{{ item.gender }}</td>
             <td>{{ item.faculty }}</td>
             <td>{{ item.assessment }}</td>
-            <td>{{ item.educationStartYear }}</td>
-            <td>{{ item.educationEndYear }}</td>
+            <td>{{ item.educationStartYear | dateString : "seconds" }}</td>
+            <td>{{ item.educationEndYear | dateString : "seconds" }}</td>
             <td>
               <p-button
                 class="p-button-raised ml cursor-pointer"

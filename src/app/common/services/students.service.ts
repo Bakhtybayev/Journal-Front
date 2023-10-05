@@ -19,13 +19,27 @@ export class StudentsService {
   constructor(private http: HttpClient) {}
 
   getStudents(params?: {
+    name: string;
+    lastname: string;
+    from: string;
+    semester: string;
+    email: string;
+    phone: string;
+    gender: string;
+    faculty: string;
+    assessment: string;
+    educationStartYear: string;
+    educationEndYear: string;
     page?: number;
     count?: number;
   }): Observable<StudentDataModel> {
+    console.log(11111);
+    console.log(params);
     return this.http
       .get<StudentDataModel>(
         StudentsService.rootUrl + StudentsService.getStudentsRootUrl,
         {
+          params,
           headers: {
             Accept: 'application/json',
           },
