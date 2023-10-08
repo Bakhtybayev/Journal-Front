@@ -7,16 +7,6 @@
     <app-filters></app-filters>
   </div>
   <ng-container *ngIf="state$ | async as state">
-    <div class="sub-header">
-      <!-- <button
-        pButton
-        pRipple
-        type="button"
-        icon="pi pi-plus"
-        label="Create staff"
-        class="p-button-secondary mr-2"
-      ></button> -->
-    </div>
     <div class="content p-2">
       <table class="items">
         <thead>
@@ -39,9 +29,9 @@
 
         <tbody *ngIf="!state.loading && !state.error">
           <tr *ngFor="let item of state.items">
-            <td>{{ item.name }}</td>
+            <td>{{ item.studentName }}</td>
             <td>{{ item.lastname }}</td>
-            <td>{{ item.from }}</td>
+            <td>{{ item.studentFrom }}</td>
             <td>{{ item.semester }}</td>
             <td>{{ item.email }}</td>
             <td>{{ item.phone }}</td>
@@ -97,7 +87,6 @@
           </tr>
         </tbody>
       </table>
-
       <p-paginator
         [rows]="rows"
         [first]="((state?.page ?? 0) - 1) * rows"

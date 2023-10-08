@@ -33,8 +33,6 @@ export class StudentsService {
     page?: number;
     count?: number;
   }): Observable<StudentDataModel> {
-    console.log(11111);
-    console.log(params);
     return this.http
       .get<StudentDataModel>(
         StudentsService.rootUrl + StudentsService.getStudentsRootUrl,

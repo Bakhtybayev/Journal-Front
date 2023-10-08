@@ -77,11 +77,15 @@ export class JournalComponent {
 
     this.form = this.fb.group({
       id: this.fb.control(this.studentId),
-      name: this.fb.control(this.student?.name ?? null, [Validators.required]),
+      studentName: this.fb.control(this.student?.studentName ?? null, [
+        Validators.required,
+      ]),
       lastname: this.fb.control(this.student?.lastname ?? null, [
         Validators.required,
       ]),
-      from: this.fb.control(this.student?.from ?? null, [Validators.required]),
+      studentFrom: this.fb.control(this.student?.studentFrom ?? null, [
+        Validators.required,
+      ]),
       email: this.fb.control(this.student?.email ?? null, [
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),

@@ -1,8 +1,8 @@
 export interface StudentModel {
   id: number;
-  name: string;
+  studentName: string;
   lastname: string;
-  from: string;
+  studentFrom: string;
   semester: string;
   email: string;
   phone: string;

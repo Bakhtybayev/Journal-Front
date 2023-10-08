@@ -7,7 +7,7 @@
         <span class="p-float-label">
           <input
             pInputText
-            formControlName="name"
+            formControlName="studentName"
             class="w-full"
             placeholder="Name"
           />
@@ -31,7 +31,7 @@
         <span class="p-float-label">
           <input
             pInputText
-            formControlName="from"
+            formControlName="studentFrom"
             class="w-full"
             placeholder="From"
           />
@@ -161,7 +161,7 @@
         pRipple
         type="button"
         icon="pi pi-times"
-        [disabled]="form.pristine || form.invalid"
+        [disabled]="form.invalid || !form.dirty"
         class="mr-10 p-button-rounded cursor-pointer"
         (click)="onReset()"
       ></button>
@@ -171,6 +171,7 @@
         pRipple
         type="button"
         icon="pi pi-search"
+        [disabled]="form.invalid || !form.dirty"
         class="p-button-success p-button-rounded cursor-pointer"
         (click)="onSearch()"
       ></button>

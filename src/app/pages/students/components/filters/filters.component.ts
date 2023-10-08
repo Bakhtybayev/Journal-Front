@@ -82,14 +82,16 @@ export class FiltersComponent {
     this.submitted = false;
   }
 
-  onReset() {}
+  onReset() {
+    this.form?.reset();
+  }
 
   onGenerateFormValues() {
     this.form = this.fb.group({
       // id: this.fb.control(this.studentId),
-      name: this.fb.control(this.form?.value?.name ?? null),
+      studentName: this.fb.control(this.form?.value?.studentName ?? null),
       lastname: this.fb.control(this.form?.value?.lastname ?? null),
-      from: this.fb.control(this.form?.value?.from ?? null),
+      studentFrom: this.fb.control(this.form?.value?.studentFrom ?? null),
       email: this.fb.control(this.form?.value?.email ?? null),
       phone: this.fb.control(this.form?.value?.phone ?? null),
       gender: this.fb.control(this.form?.value?.gender ?? null),

@@ -36,7 +36,7 @@ export class StudentsComponent {
   ) {}
 
   ngOnInit() {
-    this.store.dispatch(new StudentsAction(''));
+    this.getStudentsData();
   }
 
   async paginate(event: LazyLoadEvent) {
@@ -55,7 +55,13 @@ export class StudentsComponent {
       relativeTo: this.route,
     });
 
-    // this.getData();
+    this.getStudentsData();
+  }
+
+  getStudentsData() {
+    const page = this.route.snapshot.queryParams['page'] ?? 1;
+    const count = this.route.snapshot.queryParams['count'] ?? 10;
+    this.store.dispatch(new StudentsAction({ page, count }));
   }
 
   onOpenJournal(studentId?: number) {
