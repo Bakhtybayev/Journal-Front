@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngxs/store';
 import { firstValueFrom } from 'rxjs';
 import { StudentDataModel } from 'src/app/common/modules/StudentData.model';
 import {
@@ -8,6 +10,7 @@ import {
   SemesterTypes,
 } from 'src/app/common/modules/StudentStateTypes.model';
 import { StudentsService } from 'src/app/common/services/students.service';
+import { FilteredStudentsAction } from '../../state/students.actions';
 
 @Component({
   selector: 'app-filters',
@@ -50,7 +53,12 @@ export class FiltersComponent {
     }
   }
 
-  constructor(private fb: FormBuilder, private api: StudentsService) {
+  constructor(
+    private fb: FormBuilder,
+    private api: StudentsService,
+    private store: Store,
+    private route: ActivatedRoute
+  ) {
     // this.statuses = Object.entries(OrderStatus).map(([value, text]) => ({
     //   label: value,
     //   value: text,
@@ -72,7 +80,10 @@ export class FiltersComponent {
     let params = { ...this.form?.value };
     await firstValueFrom(this.api.getStudents({ ...params }))
       .then((response) => {
-        this.students = response;
+        const page = this.route.snapshot.queryParams['page'] ?? 1;
+        this.store.dispatch(
+          new FilteredStudentsAction({ students: response, page })
+        );
         this.onGenerateFormValues();
       })
       .catch((error) => {
